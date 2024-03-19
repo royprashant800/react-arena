@@ -1,5 +1,5 @@
 const resList = [
-    {
+      {
         "info": {
           "id": "84147",
           "name": "Saurashtra Chawana & Sweets",
