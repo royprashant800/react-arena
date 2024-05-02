@@ -36,12 +36,12 @@ const Body = () => {
  //Conditional rendering 
   return listOfRestaurants.length === 0 ? <Shimmer /> : (
       <div>
-          <div className="filter">
-            <div className="search">
-              <input className='search-box' type='text' value={searchtext} onChange={(e) => {
+          <div className="filter flex">
+            <div className="search m-4 p-4">
+              <input className='border border-solid border-black' type='text' value={searchtext} onChange={(e) => {
                 setSearchtext(e.target.value)
               }}/>
-              <button 
+              <button className='px-4 py-2 m-4 bg-green-100 rounded-md'
                 onClick={() => {
                   //Filter the restaurant card and update the UI
 
@@ -53,14 +53,17 @@ const Body = () => {
                 }}
               >Search</button>
             </div>
-            <button className='filter-btn' onClick={() => {
-                const filteredList = listOfRestaurants.filter(
-                  (res) => res.info.avgRating > 4.5
-                )
-                setListOfRestaurants(filteredList);
-            }}>Top Rated restaurants</button>
+            <div className='m-4 p-4 flex items-center'>
+              <button className='px-4 py-2 bg-gray-100 rounded-md' onClick={() => {
+                  const filteredList = listOfRestaurants.filter(
+                    (res) => res.info.avgRating > 4.5
+                  )
+                  setListOfRestaurants(filteredList);
+                }}>Top Rated restaurants
+              </button>
+            </div>
           </div>
-          <div className="res-container">
+          <div className="flex flex-wrap">
             {filteredListOfRestaurants.map((restaurant) => (
               <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}><RestaurantCard resData={restaurant} /></Link>
             ))}
