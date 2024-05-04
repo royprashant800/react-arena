@@ -1,4 +1,4 @@
-import RestaurantCard from './RestaurantCard';
+import RestaurantCard, { withPromotedLabel } from './RestaurantCard';
 import resList from '../utils/mockData';
 import { CDN_URL } from '../utils/constants';
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ const Body = () => {
  const [listOfRestaurants, setListOfRestaurants] = useState([]);
  const [filteredListOfRestaurants, setFilteredListOfRestaurants] = useState([]);
  const [searchtext, setSearchtext] = useState(""); 
+ const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
  useEffect(() => {
   fetchData();
@@ -20,7 +21,7 @@ const Body = () => {
   const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=23.1808466&lng=72.6471847&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
 
   const json = await data.json();
-  
+
   //optional Chaining
   setListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   setFilteredListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
@@ -65,7 +66,7 @@ const Body = () => {
           </div>
           <div className="flex flex-wrap">
             {filteredListOfRestaurants.map((restaurant) => (
-              <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}><RestaurantCard resData={restaurant} /></Link>
+              <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}>{restaurant.info.pronoted ? (<RestaurantCardPromoted resData={restaurant} />) : (<RestaurantCard resData={restaurant} />)}</Link>
             ))}
           </div>
       </div>
